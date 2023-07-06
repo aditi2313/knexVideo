@@ -7,16 +7,19 @@ exports.up = function(knex, Promise) {
         table.increments();
         table.string('name').notNullable();
         table.string('email').notNullable();
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.string('password').notNullable();
+        table.string('address').notNullable();
     })
-    .createTable('todos', function(table) {
+    .createTable('products', function(table) {
         table.increments();
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.fn.now());
-        table.string('title').notNullable();
-        table.boolean('completed').notNullable().defaultTo(false);
+        table.string('name').notNullable();
+        table.integer('price').notNullable();
+        table.integer('units_available').notNullable();
+    })
+    .createTable('orders', function(table) {
+        table.increments();
         table.integer('user_id').references('id').inTable('users');
+        table.jsonb('order_details').notNullable();
     });
 };
 
@@ -25,5 +28,5 @@ exports.up = function(knex, Promise) {
  * @returns { Promise<void> }
  */
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('todos').dropTable('users');
+    return knex.schema.dropTable('users').dropTable('products').dropTable('orders');
 };
