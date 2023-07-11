@@ -1,0 +1,58 @@
+const express = require('express');
+const router = express.Router();
+const knex = require('./db/knex');
+
+// Get request from orders table.
+router.get('/', function(req, res) {
+    knex.select().from('orders')
+    .then(function(orders) {
+        res.send(orders);
+    })
+})
+
+// Get by id request from orders table.
+router.get('/:id', function(req, res) {
+    knex.select().from('orders')
+    .where('id', req.params.id)
+    .then(function(orders) {
+        res.send(orders);
+    })
+})
+
+// Post request to orders table.
+router.post('/', function(req, res) {
+    knex('orders').insert({
+        user_id: req.body.user_id,
+        order_details: req.body.order_details
+    })
+    .then(function() {
+        knex.select().from('orders')
+        .then(function(orders) {
+            res.send(orders);
+        })
+    })
+})
+
+// Delete request to delete an order.
+router.delete('/:id', function(req, res) {
+    knex('orders').where('id', req.params.id)
+    .del()
+    .then(function() {
+        knex.select().from('orders')
+        .then(function(orders) {
+            res.send(orders);
+        })
+    })
+})
+
+// Get request to return orders of a user.
+router.get('/orders-of-user/:id', function(req, res) {
+    knex.from('orders')
+    .innerJoin('users', 'orders.user_id', 'users.id')
+    .where('orders.user_id', req.params.id)
+    .then(function(data) {
+        res.send(data);
+    })
+})
+
+module.exports = router;
