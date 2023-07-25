@@ -26,11 +26,22 @@ router.get('/:id', function(req, res) {
 
 // Post request to users table. Creating a new user.
 router.post('/register', function(req, res) {
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
+    const address = req.body.address;
+  
+    // Validate the email format using a regular expression.
+    const emailRegex = /@.+\..+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: 'Invalid email format. Email must end with "@_.com"' });
+    }
+
     knex('users').insert({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        address: req.body.address
+        name: name,
+        email: email,
+        password: password,
+        address: address
     })
     .then(function() {
         knex.select().from('users')

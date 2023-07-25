@@ -21,15 +21,29 @@ router.get('/:id', function(req, res) {
 
 // Post request to orders table.
 router.post('/', function(req, res) {
-    knex('orders').insert({
-        user_id: req.body.user_id,
-        order_details: req.body.order_details
-    })
-    .then(function() {
-        knex.select().from('orders')
-        .then(function(orders) {
-            res.send(orders);
-        })
+    const user_id = req.body.user_id;
+    const order_details = req.body.order_details;
+
+    const product_name = order_details.product;
+    const quantity = order_details.quantity;
+
+    knex.select('units_available').from('products')
+    .where('name', product_name)
+    .then(function(product_units) {
+        if (quantity > 0 && quantity <= product_units[0].units_available) {
+            knex('orders').insert({
+                user_id: user_id,
+                order_details: order_details
+            })
+            .then(function() {
+                knex.select().from('orders')
+                .then(function(orders) {
+                    res.send(orders);
+                })
+            })
+        } else {
+            return res.status(401).json({ error: 'Invalid order details' });
+        }
     })
 })
 
