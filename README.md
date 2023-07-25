@@ -1,10 +1,12 @@
 # Knex project Invansys
 
 For the project we will be making an online ordering app with knex, nodejs, postgres and postman (postman for running our crud endpoints get/post/put/delete requests),
-You can either proceed with 3 table structure( tables - user, order details, product) or can implement a 4 table one (tables-user, order, order details, product).
+You can either proceed with 3 table structure (tables - user, order details, product) or can implement a 4 table one (tables-user, order, order details, product).
 
 User (id, name, email, password, address)
+
 Order (id, userId, orderdetails (if you are using a 4 table structure you can make separate table for orderdetails with relevant columns, in this case of 3 tables you can store orderdetails in a jsonb format)) 
+
 Product (id, name, price, units available)
 
 You can modify this schema bu tmake sure to use postgis datatypes, jsonb and other things with you have studied before.
