@@ -1,4 +1,4 @@
-# Knex project Invansys
+# Knex Project Invansys
 
 For the project we will be making an online ordering app with knex, nodejs, postgres and postman (postman for running our crud endpoints get/post/put/delete requests),
 You can either proceed with 3 table structure (tables - user, order details, product) or can implement a 4 table one (tables-user, order, order details, product).
