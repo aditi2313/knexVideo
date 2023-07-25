@@ -9,7 +9,7 @@ Order (id, userId, orderdetails (if you are using a 4 table structure you can ma
 
 Product (id, name, price, units available)
 
-You can modify this schema bu tmake sure to use postgis datatypes, jsonb and other things with you have studied before.
+You can modify this schema but make sure to use postgis datatypes, jsonb and other things with you have studied before.
 After defining the structure the app should be able to perform the following operations.
 
 # CRUD ENDPOINTS:
